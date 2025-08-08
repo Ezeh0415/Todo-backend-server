@@ -12,7 +12,9 @@ const DataBaseLink = (req, res) => {
 };
 
 const DataBasePost = (req, res) => {
+   console.log('Data requested for save:', req.body);
   const Todo = new Todos(req.body);
+
 
   Todo.save()
     .then((data) => {
@@ -58,17 +60,18 @@ const DataBaseGetSingleTodo = (req, res) => {
 
 
 const DataBaseDelete = (req, res) => {
+  console.log('DELETE request for ID:', req.params.id);
   const id = req.params.id;
   Todos.findByIdAndDelete(id)
-    .then((data) => {
-      res.json({ message: "Todo deleted successfully" });
+    .then(() => {
+      res.status(200).json({ message: "Todo deleted successfully" });
     })
     .catch((err) => {
-      res.json({ error: err });
+      console.error(err);
+      res.status(500).json({ error: err.message || "Server error" });
     });
+};
 
-  
-}
 module.exports = {
   DataBaseLink,
   DataBasePost,
