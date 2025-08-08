@@ -9,6 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
+// If you want more control:
+app.options('*', cors()); // handle preflight for all routes
 app.use(express.json());
 
 // conect to db
